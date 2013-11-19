@@ -1,0 +1,9 @@
+package com.fjaviermo.geotasker.databases;
+
+import android.content.ContentProvider;
+import android.content.ContentProvider.PipeDataWriter;
+import android.database.Cursor;
+
+public class ProfilesProvider  extends ContentProvider implements PipeDataWriter<Cursor> {
+
+}

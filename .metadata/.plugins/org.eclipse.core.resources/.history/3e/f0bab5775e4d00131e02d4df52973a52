@@ -1,0 +1,5 @@
+package com.fjaviermo.geotasker.database;
+
+public class ProfilesDataSource {
+
+}

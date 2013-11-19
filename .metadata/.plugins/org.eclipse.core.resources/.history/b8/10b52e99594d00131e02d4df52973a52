@@ -1,0 +1,5 @@
+package com.fjaviermo.geotasker.databases;
+
+public class ProfilesProvider  extends ContentProvider implements PipeDataWriter<Cursor> {
+
+}

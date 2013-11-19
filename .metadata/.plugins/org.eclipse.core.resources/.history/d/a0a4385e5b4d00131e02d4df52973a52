@@ -1,0 +1,59 @@
+package com.fjaviermo.geotasker.database;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+public class ProfilesDBOpenHelper  extends SQLiteOpenHelper {
+ 
+//	private static final String DATABASE_NAME = "GeoTasker.db";
+	private static final String DATABASE_TABLE = "Profiles";
+//	private static final int DATABASE_VERSION = 1;
+	
+	private static final String KEY_ID = "_ID";
+	private static final String KEY_NAME = "NAME";
+	private static final String KEY_ACTIVE = "ACTIVE";
+ 
+	// SQL Statement to create a new database.
+	private static final String DATABASE_CREATE = "create table " +
+	DATABASE_TABLE + " (" + KEY_ID +
+	" integer primary key autoincrement, " +
+	KEY_NAME + " text not null, " +
+	KEY_ACTIVE + " integer);";
+
+	
+    //Sentencia SQL para crear la tabla de Clientes
+    String sqlCreate = "CREATE TABLE Profiles " + 
+                       "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    		           " name TEXT, " + " active INTEGER)";
+ 
+    public ProfilesDBOpenHelper(Context context, String name,
+                               CursorFactory factory, int version) {
+    	
+        super(context, name, factory, version);      
+    }
+ 
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DATABASE_CREATE);
+    }
+ 
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    	//FIXME
+    	// Log the version upgrade.
+    	Log.w("ProfileSqliteHelper", "Upgrading from version " +
+    	oldVersion + " to " +
+    	newVersion + ", which will destroy all old data");
+    	// Upgrade the existing database to conform to the new
+    	// version. Multiple previous versions can be handled by
+    	// comparing oldVersion and newVersion values.
+    	// The simplest case is to drop the old table and create a new one.
+    	db.execSQL("DROP TABLE IF IT EXISTS " + DATABASE_TABLE);
+    	// Create a new one.
+    	onCreate(db);
+
+    }
+}

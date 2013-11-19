@@ -1,0 +1,10 @@
+1384371698734	Rename compilation unit 'ProfilesSqlitehelper.java'
+1384454025468	Delete element
+1384454031460	Rename package 'com.fjaviermo.geotasker.databases'
+1384454056949	Rename type 'ProfilesDBOpenHelper'
+1384454380722	Encapsulate field 'id'
+1384454386697	Encapsulate field 'name'
+1384455014589	Encapsulate field 'active'
+1384455703494	Rename compilation unit 'Profiles.java'
+1384456271170	Rename local variable 'comment'
+1384456300687	Rename local variable 'comments'
