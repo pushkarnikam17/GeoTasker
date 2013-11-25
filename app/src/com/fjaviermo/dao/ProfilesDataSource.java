@@ -60,6 +60,19 @@ public class ProfilesDataSource {
 				        + " = " + id, null);
 	}
 
+	public Profile getProfile(long id) {
+		Cursor cursor = database.query(ProfilesSQLiteHelper.TABLE_NAME,
+				allColumns, ProfilesSQLiteHelper.COLUMN_ID + "=" + id,
+				null, null, null, null, null);
+		cursor.moveToFirst();
+		
+		Profile profile = cursorToProfile(cursor);
+		// make sure to close the cursor
+		cursor.close();
+		
+		return profile;
+	}
+	
 	public List<Profile> getAllProfiles() {
 		List<Profile> profiles = new ArrayList<Profile>();
 		Cursor cursor = database.query(ProfilesSQLiteHelper.TABLE_NAME,
