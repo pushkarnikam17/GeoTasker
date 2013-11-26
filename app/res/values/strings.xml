@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">GeoTasker</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Preferencias</string>
+    <string name="add_profile">Settings</string>
+    <string name="name">Nombre:</string>
 
 </resources>
