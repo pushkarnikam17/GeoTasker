@@ -2,8 +2,6 @@ package com.fjaviermo.geotasker;
 
 import java.util.List;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +21,9 @@ public class ProfileListFragment extends ListFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
+		getActivity().getActionBar().setHomeButtonEnabled(false);
+		getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+
 
 	    profileDAO = new ProfilesDataSource(getActivity().getBaseContext());
 	    profileDAO.open();
@@ -60,22 +61,10 @@ public class ProfileListFragment extends ListFragment{
 	  public boolean onOptionsItemSelected(MenuItem item) {
 	     // handle item selection
 	     switch (item.getItemId()) {
-	        case R.id.menu_new:
-	        	ProfileFragment profileDescFragment;
-	    		FragmentManager fm = getFragmentManager();
+	        case R.id.menu_new:	        	
+	            AddProfileDialogFragment theDialog = new AddProfileDialogFragment();
+	            theDialog.show(getFragmentManager(), null);
 
-	    		// Handle dynamic switch to description fragment
-	    		FragmentTransaction ft = fm.beginTransaction();
-
-	    		// Create the fragment and attach book index
-	    		profileDescFragment = new ProfileFragment();
-
-	    		// Replace the profile list with the description
-	    		ft.replace(R.id.layoutRoot, profileDescFragment, "profileDescription");
-	    		ft.addToBackStack(null);
-	    		ft.setCustomAnimations(
-	    				android.R.animator.fade_in, android.R.animator.fade_out);
-	    		ft.commit();
 	        	return true;
 	        default:
 	           return super.onOptionsItemSelected(item);

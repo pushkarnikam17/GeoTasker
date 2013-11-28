@@ -1,6 +1,8 @@
 package com.fjaviermo.geotasker;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +29,9 @@ public class ProfileFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 
+		getActivity().getActionBar().setHomeButtonEnabled(true);
+		getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		View viewHierarchy = inflater.inflate(R.layout.fragment_profile, container, false);
 
 		// Get reference to profile description edit text
@@ -50,7 +55,7 @@ public class ProfileFragment extends Fragment{
 	}
 
 	public void setProfile(String profileName) {
-		
+
 		// Display it
 		mProfileNameEditText.setText(profileName);
 	}
@@ -64,6 +69,22 @@ public class ProfileFragment extends Fragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// handle item selection
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			ProfileListFragment profileListFragment;
+			FragmentManager fm = getFragmentManager();
+
+			// Handle dynamic switch to description fragment
+			FragmentTransaction ft = fm.beginTransaction();
+
+			// Create the fragment and attach book index
+			profileListFragment = new ProfileListFragment();
+
+			// Replace the profile list with the description
+			ft.replace(R.id.layoutRoot, profileListFragment, "profilelist");
+			ft.setCustomAnimations(
+					android.R.animator.fade_in, android.R.animator.fade_out);
+			ft.commit();
+			return true;
 		case R.id.menu_new:
 
 			return true;

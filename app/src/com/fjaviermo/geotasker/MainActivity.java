@@ -14,7 +14,7 @@ implements OnSelectedProfileChangeListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		ProfilesDataSource profileDAO = new ProfilesDataSource(getBaseContext());
 		profileDAO.open();
 		profileDAO.close();
