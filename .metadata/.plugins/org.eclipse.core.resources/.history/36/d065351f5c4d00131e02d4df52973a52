@@ -1,7 +1,0 @@
-package com.fjaviermo.geotasker.database;
-
-public class Profiles {
-	private long id;
-	private String name;
-	private boolean active;
-}
