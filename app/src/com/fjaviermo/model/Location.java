@@ -7,78 +7,78 @@ public class Location {
 
 	public enum Type { ENTER(1), LEAVE(2), ENTER_LEAVE(3);
 	
-	private int value;
-	private static final  SparseArray<Type> typesByValue = new SparseArray<Type>();
+	private int mValue;
+	private static final  SparseArray<Type> mTypesByValue = new SparseArray<Type>();
 
 	static {
 		for (Type type : Type.values()) {
-			typesByValue.put(type.value, type);
+			mTypesByValue.put(type.mValue, type);
 		}
 	}
 
 	private Type(int value) {
-		this.value = value;
+		this.mValue = value;
 	}
 
 	public int getValue() {
-		return value;
+		return mValue;
 	}
 
 	public static Type forValue(int value) {
-		return typesByValue.get(value);
+		return mTypesByValue.get(value);
 	}
 	}
 	
-	private long id;
-	private long idProfile;
-	private long latitude;
-	private long longitude;
-	private Type type;
+	private long mId;
+	private long mIdProfile;
+	private long mLatitude;
+	private long mLongitude;
+	private Type mType;
 	
 	
 	public long getId() {
-		return id;
+		return mId;
 	}
 	
 	public void setId(long id) {
-		this.id = id;
+		mId = id;
 	}
 	
 	public long getIdProfile() {
-		return idProfile;
+		return mIdProfile;
 	}
 	
 	public void setIdProfile(long idProfile) {
-		this.idProfile = idProfile;
+		mIdProfile = idProfile;
 	}
 
 	public long getLatitude() {
-		return latitude;
+		return mLatitude;
 	}
 
 	public void setLatitude(long latitude) {
-		this.latitude = latitude;
+		mLatitude = latitude;
 	}
 
 	public long getLongitude() {
-		return longitude;
+		return mLongitude;
 	}
 
 	public void setLongitude(long longitude) {
-		this.longitude = longitude;
+		mLongitude = longitude;
 	}
 
 	public Type getType() {
-		return type;
+		return mType;
 	}
 
 	public void setType(Type type) {
-		this.type = type;
+		mType = type;
 	}
 	
 	// Will be used by the ArrayAdapter in the ListView
 	@Override
 	public String toString() {
-		return latitude + " , " + longitude;
+		return mLatitude + " , " + mLongitude;
 	}
 }

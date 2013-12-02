@@ -16,34 +16,34 @@ import com.fjaviermo.model.Profile;
 public class ProfilesDataSource {
 
 	// Database fields
-	private SQLiteDatabase database;
-	private DatabaseHelper dbHelper;
-	private String[] allColumns = { 
+	private SQLiteDatabase mDatabase;
+	private DatabaseHelper mDbHelper;
+	private String[] mAllColumns = { 
 			ProfilesSQLiteHelper.COLUMN_ID,
 			ProfilesSQLiteHelper.COLUMN_NAME,
 			ProfilesSQLiteHelper.COLUMN_ACTIVE
 	};
 
 	public ProfilesDataSource(Context context) {
-		dbHelper = new DatabaseHelper(context);
+		mDbHelper = new DatabaseHelper(context);
 	}
 
 	public void open() throws SQLException {
-		database = dbHelper.getWritableDatabase();
+		mDatabase = mDbHelper.getWritableDatabase();
 	}
 
 	public void close() {
-		dbHelper.close();
+		mDbHelper.close();
 	}
 
 	public Profile createProfile(String name, boolean active) {
 		ContentValues values = new ContentValues();
 		values.put(ProfilesSQLiteHelper.COLUMN_NAME, name);
 		values.put(ProfilesSQLiteHelper.COLUMN_ACTIVE, active ? 1 : 0);
-		long insertId = database.insert(ProfilesSQLiteHelper.TABLE_NAME, null,
+		long insertId = mDatabase.insert(ProfilesSQLiteHelper.TABLE_NAME, null,
 				values);
-		Cursor cursor = database.query(ProfilesSQLiteHelper.TABLE_NAME,
-				allColumns, ProfilesSQLiteHelper.COLUMN_ID + " = " + insertId, null,
+		Cursor cursor = mDatabase.query(ProfilesSQLiteHelper.TABLE_NAME,
+				mAllColumns, ProfilesSQLiteHelper.COLUMN_ID + " = " + insertId, null,
 				null, null, null);
 		cursor.moveToFirst();
 		Profile newProfile = cursorToProfile(cursor);
@@ -55,14 +55,14 @@ public class ProfilesDataSource {
 	public void deleteProfile(Profile profile) {
 		long id = profile.getId();
 		System.out.println("Profile deleted with id: " + id);
-		database.delete(ProfilesSQLiteHelper.TABLE_NAME, 
+		mDatabase.delete(ProfilesSQLiteHelper.TABLE_NAME, 
 				        ProfilesSQLiteHelper.COLUMN_ID
 				        + " = " + id, null);
 	}
 
 	public Profile getProfile(long id) {
-		Cursor cursor = database.query(ProfilesSQLiteHelper.TABLE_NAME,
-				allColumns, ProfilesSQLiteHelper.COLUMN_ID + "=" + id,
+		Cursor cursor = mDatabase.query(ProfilesSQLiteHelper.TABLE_NAME,
+				mAllColumns, ProfilesSQLiteHelper.COLUMN_ID + "=" + id,
 				null, null, null, null, null);
 		cursor.moveToFirst();
 		
@@ -75,8 +75,8 @@ public class ProfilesDataSource {
 	
 	public List<Profile> getAllProfiles() {
 		List<Profile> profiles = new ArrayList<Profile>();
-		Cursor cursor = database.query(ProfilesSQLiteHelper.TABLE_NAME,
-				allColumns, null, null, null, null, null);
+		Cursor cursor = mDatabase.query(ProfilesSQLiteHelper.TABLE_NAME,
+				mAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Profile profile = cursorToProfile(cursor);

@@ -16,9 +16,9 @@ import com.fjaviermo.model.Location.Type;
 
 public class LocationDataSource {
 	// Database fields
-	private SQLiteDatabase database;
-	private DatabaseHelper dbHelper;
-	private String[] allColumns = { 
+	private SQLiteDatabase mDatabase;
+	private DatabaseHelper mDbHelper;
+	private String[] mAllColumns = { 
 			LocationSQLiteHelper.COLUMN_ID,
 			LocationSQLiteHelper.COLUMN_ID_PROFILE,
 			LocationSQLiteHelper.COLUMN_LATITUDE,
@@ -27,15 +27,15 @@ public class LocationDataSource {
 	};
 
 	public LocationDataSource(Context context) {
-		dbHelper = new DatabaseHelper(context);
+		mDbHelper = new DatabaseHelper(context);
 	}
 
 	public void open() throws SQLException {
-		database = dbHelper.getWritableDatabase();
+		mDatabase = mDbHelper.getWritableDatabase();
 	}
 
 	public void close() {
-		dbHelper.close();
+		mDbHelper.close();
 	}
 
 	public Location createLocation(long id_profile, long latitude, long longitude, Location.Type type) {
@@ -45,10 +45,10 @@ public class LocationDataSource {
 		values.put(LocationSQLiteHelper.COLUMN_LONGITUDE, longitude);
 		values.put(LocationSQLiteHelper.COLUMN_TYPE, type.getValue());
 
-		long insertId = database.insert(LocationSQLiteHelper.TABLE_NAME, null,
+		long insertId = mDatabase.insert(LocationSQLiteHelper.TABLE_NAME, null,
 				values);
-		Cursor cursor = database.query(LocationSQLiteHelper.TABLE_NAME,
-				allColumns, LocationSQLiteHelper.COLUMN_ID + " = " + insertId, null,
+		Cursor cursor = mDatabase.query(LocationSQLiteHelper.TABLE_NAME,
+				mAllColumns, LocationSQLiteHelper.COLUMN_ID + " = " + insertId, null,
 				null, null, null);
 		cursor.moveToFirst();
 		Location newLocation = cursorToLocation(cursor);
@@ -60,15 +60,15 @@ public class LocationDataSource {
 	public void deleteLocation(Location location) {
 		long id = location.getId();
 		System.out.println("Location deleted with id: " + id);
-		database.delete(LocationSQLiteHelper.TABLE_NAME, 
+		mDatabase.delete(LocationSQLiteHelper.TABLE_NAME, 
 				LocationSQLiteHelper.COLUMN_ID
 				        + " = " + id, null);
 	}
 
 	public List<Location> getAllLocations() {
 		List<Location> locations = new ArrayList<Location>();
-		Cursor cursor = database.query(LocationSQLiteHelper.TABLE_NAME,
-				allColumns, null, null, null, null, null);
+		Cursor cursor = mDatabase.query(LocationSQLiteHelper.TABLE_NAME,
+				mAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Location location = cursorToLocation(cursor);

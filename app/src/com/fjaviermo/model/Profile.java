@@ -2,37 +2,37 @@ package com.fjaviermo.model;
 
 public class Profile {
 	
-	private long id;
-	private String name;
-	private boolean active;
+	private long mId;
+	private String mName;
+	private boolean mActive;
 	
 	public long getId() {
-		return id;
+		return mId;
 	}
 	
 	public void setId(long id) {
-		this.id = id;
+		this.mId = id;
 	}
 	
 	public String getName() {
-		return name;
+		return mName;
 	}
 	
 	public void setName(String name) {
-		this.name = name;
+		mName = name;
 	}
 	
 	public boolean isActive() {
-		return active;
+		return mActive;
 	}
 	
 	public void setActive(boolean active) {
-		this.active = active;
+		mActive = active;
 	}
 	
 	// Will be used by the ArrayAdapter in the ListView
 	@Override
 	public String toString() {
-		return name;
+		return mName;
 	}
 }
