@@ -23,8 +23,9 @@ public class ProfileFragment extends Fragment{
 	private static final long PROFILE_INDEX_NOT_SET = -1;
 
 	private EditText mProfileNameEditText;
-	private ProfilesDataSource profileDAO;
-
+	private ProfilesDataSource mProfileDAO;
+	private Profile mProfile;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
@@ -40,22 +41,20 @@ public class ProfileFragment extends Fragment{
 
 		// Retrieve the profile id if attached
 		Bundle args = getArguments();
-		long bookIndex = args != null ? args.getLong(PROFILE_INDEX, PROFILE_INDEX_NOT_SET) : PROFILE_INDEX_NOT_SET;
+		long bookIndex = args != null ? args.getLong(PROFILE_INDEX, PROFILE_INDEX_NOT_SET) 
+				: PROFILE_INDEX_NOT_SET;
 
 		// If we find the profile id, use it
-		if (bookIndex != PROFILE_INDEX_NOT_SET) {
-			profileDAO = new ProfilesDataSource(getActivity().getBaseContext());
-			profileDAO.open();
-			Profile profile = profileDAO.getProfile(bookIndex);
-			profileDAO.close();
-			setProfile(profile.getName());
-		}
+		mProfileDAO = new ProfilesDataSource(getActivity().getBaseContext());
+		mProfileDAO.open();
+		mProfile = mProfileDAO.getProfile(bookIndex);
+		//profileDAO.close();
+		setProfile(mProfile.getName());
 
 		return viewHierarchy;
 	}
 
 	public void setProfile(String profileName) {
-
 		// Display it
 		mProfileNameEditText.setText(profileName);
 	}
@@ -69,6 +68,11 @@ public class ProfileFragment extends Fragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// handle item selection
 		switch (item.getItemId()) {
+		case R.id.menu_new:
+			mProfileDAO.deleteProfile(mProfile);
+		    getActivity().getFragmentManager().popBackStack();
+			return true;
+
 		case android.R.id.home:
 			ProfileListFragment profileListFragment;
 			FragmentManager fm = getFragmentManager();
@@ -80,13 +84,10 @@ public class ProfileFragment extends Fragment{
 			profileListFragment = new ProfileListFragment();
 
 			// Replace the profile list with the description
-			ft.replace(R.id.layoutRoot, profileListFragment, "profilelist");
+			ft.replace(R.id.layoutRoot, profileListFragment, MainActivity.PROFILE_LIST);
 			ft.setCustomAnimations(
 					android.R.animator.fade_in, android.R.animator.fade_out);
 			ft.commit();
-			return true;
-		case R.id.menu_new:
-
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -5,20 +5,19 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.fjaviermo.dao.ProfilesDataSource;
+import com.fjaviermo.geotasker.ProfileListFragment.OnSelectedProfileChangeListener;
 
 public class MainActivity extends Activity 
 implements OnSelectedProfileChangeListener {
 
+	public static final String PROFILE_LIST = "profileList";
+	public static final String PROFILE_DESC = "profileDescription";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		ProfilesDataSource profileDAO = new ProfilesDataSource(getBaseContext());
-		profileDAO.open();
-		profileDAO.close();
-		
+
 		// Get the profile description fragment
 		FragmentManager fm = getFragmentManager();
 
@@ -27,12 +26,12 @@ implements OnSelectedProfileChangeListener {
 
 		// Create the Fragment and add
 		ProfileListFragment listFragment = new ProfileListFragment();
-		ft.add(R.id.layoutRoot, listFragment, "profileList");
+		ft.add(R.id.layoutRoot, listFragment, PROFILE_LIST);
 
 		// Commit the changes
 		ft.commit();
 	}
-	
+
 	@Override
 	public void onSelectedProfileChanged(long profileIndex) {
 		ProfileFragment profileDescFragment;
@@ -48,7 +47,7 @@ implements OnSelectedProfileChangeListener {
 		profileDescFragment.setArguments(args);
 
 		// Replace the profile list with the description
-		ft.replace(R.id.layoutRoot, profileDescFragment, "profileDescription");
+		ft.replace(R.id.layoutRoot, profileDescFragment, PROFILE_DESC);
 		ft.addToBackStack(null);
 		ft.setCustomAnimations(
 				android.R.animator.fade_in, android.R.animator.fade_out);

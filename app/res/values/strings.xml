@@ -5,5 +5,7 @@
     <string name="action_settings">Preferencias</string>
     <string name="add_profile">Settings</string>
     <string name="name">Nombre:</string>
+    <string name="taptoundo">Tap to undo</string>
+    <string name="itemdeleted">Item deleted</string>
 
 </resources>
