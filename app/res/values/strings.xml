@@ -3,9 +3,15 @@
 
     <string name="app_name">GeoTasker</string>
     <string name="action_settings">Preferencias</string>
-    <string name="add_profile">Settings</string>
+    <string name="add_profile">Añadir perfil</string>
     <string name="name">Nombre:</string>
-    <string name="taptoundo">Tap to undo</string>
-    <string name="itemdeleted">Item deleted</string>
+    <string name="undo">Deshacer</string>
+    <string name="deleted">Eliminar</string>
+    <string name="title_dialog_profile">Nombre del perfil</string>
+    <string name="profile_name_hint">Escriba el nombre del perfil</string>
+    <string name="delete_profile">Eliminar perfil</string>
+    <string name="update_profile">Actualizar perfil</string>
+    <string name="update_profile_toast_1">Perfil </string>
+    <string name="update_profile_toast_2"> actualizado</string>
 
 </resources>
