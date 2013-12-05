@@ -30,7 +30,7 @@ public class AddProfileDialogFragment extends DialogFragment {
 
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
-		builder.setTitle("Name")
+		builder.setTitle(R.string.title_dialog_profile)
 		.setView(view)
 		// Add action buttons
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

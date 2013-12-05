@@ -9,6 +9,7 @@
       android:id="@+id/profilePossibleName"
       android:layout_width="fill_parent"
       android:layout_height="match_parent"
-      android:hint="Unnamed"
+      android:singleLine="true"
+      android:hint="@string/title_dialog_profile"
       android:layout_margin="16dp"/>
 </LinearLayout>

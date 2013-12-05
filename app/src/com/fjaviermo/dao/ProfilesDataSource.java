@@ -60,6 +60,18 @@ public class ProfilesDataSource {
 				        + " = " + id, null);
 	}
 
+	public void updateProfile(Profile profile) {
+		ContentValues values = new ContentValues();
+		values.put(ProfilesSQLiteHelper.COLUMN_NAME, profile.getName());
+		values.put(ProfilesSQLiteHelper.COLUMN_ACTIVE, profile.isActive() ? 1 : 0);
+
+		long id = profile.getId();
+		System.out.println("Profile update with id: " + id);
+
+		mDatabase.update(ProfilesSQLiteHelper.TABLE_NAME, values, 
+				ProfilesSQLiteHelper.COLUMN_ID + " = " + id, null);
+	}
+	
 	public Profile getProfile(long id) {
 		Cursor cursor = mDatabase.query(ProfilesSQLiteHelper.TABLE_NAME,
 				mAllColumns, ProfilesSQLiteHelper.COLUMN_ID + "=" + id,

@@ -1,8 +1,10 @@
 package com.fjaviermo.geotasker;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fjaviermo.dao.ProfilesDataSource;
 import com.fjaviermo.model.Profile;
@@ -30,9 +33,10 @@ public class ProfileFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 
-		getActivity().getActionBar().setHomeButtonEnabled(true);
-		getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		ActionBar actionBar = getActivity().getActionBar(); 
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+				
 		View viewHierarchy = inflater.inflate(R.layout.fragment_profile, container, false);
 
 		// Get reference to profile description edit text
@@ -50,12 +54,13 @@ public class ProfileFragment extends Fragment{
 		mProfile = mProfileDAO.getProfile(bookIndex);
 		//profileDAO.close();
 		setProfile(mProfile.getName());
-
+		updateActionBarTile(mProfile.getName());
+		
 		return viewHierarchy;
 	}
 
 	public void setProfile(String profileName) {
-		// Display it
+		
 		mProfileNameEditText.setText(profileName);
 	}
 
@@ -68,9 +73,26 @@ public class ProfileFragment extends Fragment{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// handle item selection
 		switch (item.getItemId()) {
-		case R.id.menu_new:
+		case R.id.action_delete:
 			mProfileDAO.deleteProfile(mProfile);
+			
 		    getActivity().getFragmentManager().popBackStack();
+			return true;
+
+		case R.id.action_accept:
+			mProfile.setName(mProfileNameEditText.getText().toString());
+			mProfileDAO.updateProfile(mProfile);
+					
+		    Context context = getActivity().getApplicationContext();
+			CharSequence text = R.string.update_profile_toast_1 + mProfile.getName() 
+					+ R.string.update_profile_toast_2;
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();			
+		
+		    getActivity().getFragmentManager().popBackStack();
+
 			return true;
 
 		case android.R.id.home:
@@ -92,5 +114,9 @@ public class ProfileFragment extends Fragment{
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void updateActionBarTile(String title) {
+		getActivity().getActionBar().setTitle(title);
 	}
 }

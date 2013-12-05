@@ -2,6 +2,7 @@ package com.fjaviermo.geotasker;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,8 +30,10 @@ implements DeleteItemCallback, OnAddedProfileListener {
 		super.onActivityCreated(savedInstanceState);
 		
 		setHasOptionsMenu(true);
-		getActivity().getActionBar().setHomeButtonEnabled(false);
-		getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+		ActionBar actionBar = getActivity().getActionBar();
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setTitle(R.string.app_name);
 
 		mProfileDAO = new ProfilesDataSource(getActivity().getBaseContext());
 		mProfileDAO.open();
