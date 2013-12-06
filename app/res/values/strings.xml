@@ -11,7 +11,7 @@
     <string name="profile_name_hint">Escriba el nombre del perfil</string>
     <string name="delete_profile">Eliminar perfil</string>
     <string name="update_profile">Actualizar perfil</string>
-    <string name="update_profile_toast_1">Perfil </string>
-    <string name="update_profile_toast_2"> actualizado</string>
+    <string name="update_profile_toast_1">Perfil</string>
+    <string name="update_profile_toast_2">actualizado</string>
 
 </resources>

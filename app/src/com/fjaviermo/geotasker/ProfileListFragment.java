@@ -9,9 +9,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fjaviermo.adapter.ProfileAdapter;
+import com.fjaviermo.adapter.ProfileAdapter.ChangeSwitchCallback;
 import com.fjaviermo.dao.ProfilesDataSource;
 import com.fjaviermo.geotasker.AddProfileDialogFragment.OnAddedProfileListener;
 import com.fjaviermo.model.Profile;
@@ -19,12 +20,12 @@ import com.haarman.listviewanimations.itemmanipulation.contextualundo.Contextual
 import com.haarman.listviewanimations.itemmanipulation.contextualundo.ContextualUndoAdapter.DeleteItemCallback;
 
 public class ProfileListFragment extends ListFragment 
-implements DeleteItemCallback, OnAddedProfileListener {
+implements DeleteItemCallback, OnAddedProfileListener,ChangeSwitchCallback {
 
 	private ProfilesDataSource mProfileDAO;
 
 	OnSelectedProfileChangeListener mListener;
-	private ArrayAdapter<Profile> mProfilesAdapter;
+	private ProfileAdapter mProfilesAdapter;
 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -40,9 +41,8 @@ implements DeleteItemCallback, OnAddedProfileListener {
 		
 		List<Profile> profiles = mProfileDAO.getAllProfiles();
 
-		mProfilesAdapter = new ArrayAdapter<Profile>(getActivity(),
-				android.R.layout.simple_list_item_1, profiles);
-
+		mProfilesAdapter = new ProfileAdapter(getActivity(), profiles, this);
+		
 		setListAdapter(mProfilesAdapter);
 
 		ContextualUndoAdapter adapter = new ContextualUndoAdapter(mProfilesAdapter, 
@@ -50,6 +50,7 @@ implements DeleteItemCallback, OnAddedProfileListener {
 		adapter.setAbsListView(getListView());
 		getListView().setAdapter(adapter);
 		adapter.setDeleteItemCallback(this);
+		
 	}
 
 	@Override
@@ -104,5 +105,11 @@ implements DeleteItemCallback, OnAddedProfileListener {
 
 		mProfilesAdapter.add(profile);
 		mProfilesAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void changeState(int position) {
+		Profile profile = mProfilesAdapter.getItem(position);
+		mProfileDAO.updateProfile(profile);
 	}
 }

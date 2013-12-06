@@ -84,8 +84,8 @@ public class ProfileFragment extends Fragment{
 			mProfileDAO.updateProfile(mProfile);
 					
 		    Context context = getActivity().getApplicationContext();
-			CharSequence text = R.string.update_profile_toast_1 + mProfile.getName() 
-					+ R.string.update_profile_toast_2;
+			CharSequence text = getString(R.string.update_profile_toast_1) + " " 
+					+ mProfile.getName() + " " + getString(R.string.update_profile_toast_2);
 			int duration = Toast.LENGTH_SHORT;
 
 			Toast toast = Toast.makeText(context, text, duration);
@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment{
 			// Handle dynamic switch to description fragment
 			FragmentTransaction ft = fm.beginTransaction();
 
-			// Create the fragment and attach book index
+			// Create the fragment and attach profile index
 			profileListFragment = new ProfileListFragment();
 
 			// Replace the profile list with the description
